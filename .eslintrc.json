@@ -1,0 +1,6 @@
+{
+    "root": true,
+    "extends": "loosely-strict",
+    "parserOptions": { "ecmaVersion": "latest" },
+    "env": { "node": true }
+}

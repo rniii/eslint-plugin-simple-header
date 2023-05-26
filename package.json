@@ -1,0 +1,13 @@
+{
+    "name": "eslint-plugin-simple-header",
+    "version": "0.1.0",
+    "description": "Simple to license header plugin for ESLint",
+    "license": "CC0-1.0",
+    "author": "Rini",
+    "main": "src/index.js",
+    "devDependencies": {
+        "@types/node": "^20.2.4",
+        "eslint": "^8.41.0",
+        "eslint-config-loosely-strict": "git+https://codeberg.org/dissoc/eslint-config-loosely-strict.git"
+    }
+}

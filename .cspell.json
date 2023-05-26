@@ -1,0 +1,6 @@
+{
+    "version": "0.2",
+    "language": "en-GB",
+    "words": ["dissoc", "rini"],
+    "dictionaries": ["en_us", "softwareTerms", "typescript", "npm"]
+}
