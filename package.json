@@ -2,8 +2,19 @@
     "name": "eslint-plugin-simple-header",
     "version": "0.1.0",
     "description": "Simple to license header plugin for ESLint",
+    "keywords": [
+        "eslint",
+        "eslintplugin",
+        "license",
+        "header"
+    ],
+    "homepage": "https://codeberg.org/dissoc/eslint-plugin-simple-header#eslint-plugin-simple-header",
     "license": "CC0-1.0",
     "author": "Rini",
+    "repository": {
+        "type": "git",
+        "url": "https://codeberg.org/dissoc/eslint-plugin-simple-header.git"
+    },
     "main": "src/index.js",
     "devDependencies": {
         "@types/node": "^20.2.4",
