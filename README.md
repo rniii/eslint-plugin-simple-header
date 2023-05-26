@@ -4,9 +4,12 @@ Simple to use license header plugin for ESLint.
 
 ## Installation
 
-Add the following url as a dev dependency using your package manager (`pnpm add -D` or `yarn`, `npm` etc):
+Add `eslint-plugin-simple-header` as a dev dependency using your package manager:
 
-    git+https://codeberg.org/dissoc/eslint-plugin-simple-header.git
+``` sh
+$ pnpm add -D eslint-plugin-simple-header
+# or yarn, npm etc
+```
 
 ## Usage
 
