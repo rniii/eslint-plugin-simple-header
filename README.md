@@ -6,7 +6,7 @@ Simple to use license header plugin for ESLint.
 
 Add the following url as a dev dependency using your package manager (`pnpm add -D` or `yarn`, `npm` etc):
 
-    git+https://codeberg.org/dissoc/eslint-plugin-simple-header
+    git+https://codeberg.org/dissoc/eslint-plugin-simple-header.git
 
 ## Usage
 
@@ -51,6 +51,11 @@ And when running auto-fix, will insert a header like so:
 (Where 2023 is the current year, if you are from the future)
 
 See the section below for more info on `templates`.
+
+If a header is already present when running auto-fix, it will be replaced (note that JSDoc comments are still kept).
+Additionally, the rule will still match the header if it starts with `/*!` instead of `/*`, which in many tools
+indicates that the comment should not be removed (e.g. in bundlers like
+[esbuild](https://esbuild.github.io/api/#legal-comments)).
 
 ## `header` options
 
