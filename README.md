@@ -64,7 +64,8 @@ should not be removed (e.g. in bundlers like [esbuild](https://esbuild.github.i
 
 The `simple-header/header` rule takes a variable amount of options. The last option might be an object, like so:
 
-- `"file"` text file to use as a header. Note that it should not use comment syntax
+- `"file"` text file to use as a header. Trailing spaces will be trimmed on the end of the file, but otherwise the
+  entire file is used as-is
 
 - `"files"` like `"file"`, but you can specify multiple files
 
@@ -80,7 +81,8 @@ The `simple-header/header` rule takes a variable amount of options. The last opt
        * A single line will be formatted like this.
        */
 
-- `"plain": true` uses the header text as-is in the block comment
+- `"plain": true` uses the header text as-is in the block comment, and allows you to include `/* */` in the header text
+  to more precisely control spacing inside the block comment
 
 - `"newlines"` how many blank lines should be added after the block comment (defaults to `1`)
 

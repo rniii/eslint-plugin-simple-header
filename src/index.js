@@ -38,7 +38,11 @@ const rule = (ctx) => {
         if (header instanceof Array)
             headers[i] = header.join(newline);
 
-    if (!options.plain) {
+    if (options.plain) {
+        for (const [i, header] of headers.entries()) {
+            headers[i] = header.replace(/^\/\*|\*\/$/g, "");
+        }
+    } else {
         for (const [i, header] of headers.entries()) {
             headers[i] = (newline + header).replace(/(?<=\n).*/g, (m) => ` * ${m}`.trimEnd())
                 + newline
