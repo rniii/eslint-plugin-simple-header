@@ -15,37 +15,40 @@ const fs = require("node:fs");
 
 /** @type {import("eslint").Rule.RuleModule["create"]} */
 const rule = (ctx) => {
-    const options = [...ctx.options];
     const src = /** @type {string} */(ctx.sourceCode.getText());
     const [srcHeader] = /^\s*(\/\*[^*].*?\*\/\s*)?/s.exec(src);
     const trimmedSrcHeader = srcHeader.trim();
 
-    const optionsObj = typeof ctx.options.at(-1) != "string" && !(ctx.options.at(-1) instanceof Array)
-        ? options.pop()
+    const headers = [...ctx.options];
+    const options = typeof headers.at(-1) != "string" && !(headers.at(-1) instanceof Array)
+        ? headers.pop()
         : {};
-    const headers = options;
 
-    if (optionsObj.file)
-        headers.push(fs.readFileSync(optionsObj.file, "utf8").trimEnd());
-    if (optionsObj.files)
-        headers.push(...optionsObj.files.map((file) =>
+    const newline = options.linebreak === "windows" ? "\r\n" : "\n";
+
+    if (options.file)
+        headers.push(fs.readFileSync(options.file, "utf8").trimEnd());
+    if (options.files)
+        headers.push(...options.files.map((file) =>
             fs.readFileSync(file, "utf8").trimEnd()));
     if (!headers.length)
         throw Error("No headers given!");
 
     for (const [i, header] of headers.entries())
         if (header instanceof Array)
-            headers[i] = header.join("\n");
+            headers[i] = header.join(newline);
 
     if (!options.plain) {
         for (const [i, header] of headers.entries()) {
-            headers[i] = ("\n" + header).replace(/(?<=\n).*/g, (m) => ` * ${m}`.trimEnd()) + "\n ";
+            headers[i] = (newline + header).replace(/(?<=\n).*/g, (m) => ` * ${m}`.trimEnd())
+                + newline
+                + " ";
         }
     }
 
     const templates = {
         year: ["\\d{4}", `${new Date().getFullYear()}`],
-        ...optionsObj.templates,
+        ...options.templates,
     };
 
     // First replace: https://dev.mozilla.org/docs/JavaScript/Guide/Regular_Expressions#escaping
@@ -59,23 +62,25 @@ const rule = (ctx) => {
         headers[0].replace(/\{(\w+)\}/g, (m, key) => templates[key]?.[1] ?? m)
     }*/`;
 
-    const trailingLines = src.slice(srcHeader.length).trim()
-        ? 1 + (optionsObj.newlines ?? 1)
-        : 1;
+    const trailingLines = newline.repeat(
+        src.slice(srcHeader.length).trim()
+            ? 1 + (options.newlines ?? 1)
+            : 1,
+    );
 
     if (!patterns.some((re) => re.test(trimmedSrcHeader))) {
         ctx.report({
             message: srcHeader.trim() ? "Invalid header" : "Missing header",
             loc: { line: 1, column: 0 },
             fix: (fixer) =>
-                fixer.replaceTextRange([0, srcHeader.length], defaultHeader + "\n".repeat(trailingLines)),
+                fixer.replaceTextRange([0, srcHeader.length], defaultHeader + trailingLines),
         });
-    } else if (srcHeader.startsWith("\n") || /\n*$/.exec(srcHeader)[0].length !== trailingLines) {
+    } else if (!srcHeader.startsWith("/*") || /\r?\n*$/.exec(srcHeader)[0] !== trailingLines) {
         ctx.report({
             message: "Bad header spacing",
             loc: { line: 1, column: 0 },
             fix: (fixer) =>
-                fixer.replaceTextRange([0, srcHeader.length], trimmedSrcHeader + "\n".repeat(trailingLines)),
+                fixer.replaceTextRange([0, srcHeader.length], trimmedSrcHeader + trailingLines),
         });
     }
 
@@ -93,8 +98,9 @@ const optionSchema = {
     type: "object",
     additionalProperties: false,
     properties: {
-        newlines: { type: "number", minimum: 0 },
         plain: { type: "boolean" },
+        newlines: { type: "number", minimum: 0 },
+        linebreak: { type: "string", pattern: "unix|windows" },
         templates: {
             type: "object",
             additionalProperties: false,

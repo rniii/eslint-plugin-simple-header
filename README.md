@@ -53,12 +53,12 @@ And when running auto-fix, will insert a header like so:
 
 (Where 2023 is the current year, if you are from the future)
 
-See the section below for more info on `templates`, and how to specify multiple header formats.
+See the section below for more info on `templates`, how to specify multiple header formats, and how to use external
+files for headers.
 
-If a header is already present when running auto-fix, it will be replaced (note that JSDoc comments are still kept).
-Additionally, the rule will still match the header if it starts with `/*!` instead of `/*`, which in many tools
-indicates that the comment should not be removed (e.g. in bundlers like
-[esbuild](https://esbuild.github.io/api/#legal-comments)).
+If a header is already present when auto-fixing, and it is not a JSDoc comment, it’ll be replaced. Additionally, the
+rule will still match headers that start with `/*!` instead of `/*`, which in many tools indicates that the comment
+should not be removed (e.g. in bundlers like [esbuild](https://esbuild.github.io/api/#legal-comments)).
 
 ## `header` options
 
@@ -73,8 +73,6 @@ The `simple-header/header` rule takes a variable amount of options. The last opt
   `pattern`, and when inserting headers via auto-fix, `default` will be used. By default, this includes `year`, which
   matches any four digit string and defaults to the current year.
 
-- `"newlines"` how many blank lines should be added after the block comment (defaults to `1`)
-
 - `"plain": false` automatically prefixes comment lines with asterisks, and adds leading whitespace: (this is the
   default)
 
@@ -83,6 +81,13 @@ The `simple-header/header` rule takes a variable amount of options. The last opt
        */
 
 - `"plain": true` uses the header text as-is in the block comment
+
+- `"newlines"` how many blank lines should be added after the block comment (defaults to `1`)
+
+- `"linebreak"` controls which line endings to use: `"unix"` for LF (default), `"windows"` for CRLF. Likely you will
+  want to stick with the default.
+
+  See also: the [`linebreak-style`](https://eslint.org/docs/latest/rules/linebreak-style) eslint rule
 
 All other options are treated as possible headers. They might be strings, or arrays of strings, in which they will be
 joined with newlines. If multiple headers are given, the first header is used as the default when auto-fixing.
