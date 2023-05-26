@@ -50,7 +50,7 @@ And when running auto-fix, will insert a header like so:
 
 (Where 2023 is the current year, if you are from the future)
 
-See the section below for more info on `templates`.
+See the section below for more info on `templates`, and how to specify multiple header formats.
 
 If a header is already present when running auto-fix, it will be replaced (note that JSDoc comments are still kept).
 Additionally, the rule will still match the header if it starts with `/*!` instead of `/*`, which in many tools
@@ -59,14 +59,11 @@ indicates that the comment should not be removed (e.g. in bundlers like
 
 ## `header` options
 
-The `simple-header/header` rule takes a string option and an object option:
+The `simple-header/header` rule takes a variable amount of options. The last option might be an object, like so:
 
-String option:
+- `"file"` text file to use as a header. Note that it should not use comment syntax
 
-- (required) Header text. This may be a string, or an array of strings, which will be joined by newlines (this is
-  convenient for JSON configs)
-
-Object option:
+- `"files"` like `"file"`, but you can specify multiple files
 
 - `"templates"` configures what templates can be used in the header. It should be an object whose properties are tuples
   of `[pattern, default]`. When a template is used in the header (`{foo}`), the rule will accept any headers which match
@@ -83,3 +80,9 @@ Object option:
        */
 
 - `"plain": true` uses the header text as-is in the block comment
+
+All other options are treated as possible headers. They might be strings, or arrays of strings, in which they will be
+joined with newlines. If multiple headers are given, the first header is used as the default when auto-fixing.
+
+It is technically possible to provide headers via the options array, plus `"file"` and `"files"`, and they will be
+joined in that order. This behaviour is not encouraged. It is an error to not provide headers via any of these methods.
