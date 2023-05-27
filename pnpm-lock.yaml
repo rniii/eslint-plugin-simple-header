@@ -8,8 +8,8 @@ devDependencies:
     specifier: ^8.41.0
     version: 8.41.0
   eslint-config-loosely-strict:
-    specifier: git+https://codeberg.org/dissoc/eslint-config-loosely-strict.git
-    version: codeberg.org/dissoc/eslint-config-loosely-strict/591cc03bfbd985ce955ae3584f73055fcb4e46a9(eslint-plugin-simple-import-sort@10.0.0)(eslint@8.41.0)
+    specifier: git+https://codeberg.org/rini/eslint-config-loosely-strict.git
+    version: codeberg.org/rini/eslint-config-loosely-strict/4717413299e4235eaf3c7efe681225e810d67120(eslint-plugin-simple-import-sort@10.0.0)(eslint@8.41.0)
 
 packages:
 
@@ -659,9 +659,9 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  codeberg.org/dissoc/eslint-config-loosely-strict/591cc03bfbd985ce955ae3584f73055fcb4e46a9(eslint-plugin-simple-import-sort@10.0.0)(eslint@8.41.0):
-    resolution: {commit: 591cc03bfbd985ce955ae3584f73055fcb4e46a9, repo: https://codeberg.org/dissoc/eslint-config-loosely-strict.git, type: git}
-    id: codeberg.org/dissoc/eslint-config-loosely-strict/591cc03bfbd985ce955ae3584f73055fcb4e46a9
+  codeberg.org/rini/eslint-config-loosely-strict/4717413299e4235eaf3c7efe681225e810d67120(eslint-plugin-simple-import-sort@10.0.0)(eslint@8.41.0):
+    resolution: {commit: 4717413299e4235eaf3c7efe681225e810d67120, repo: https://codeberg.org/rini/eslint-config-loosely-strict.git, type: git}
+    id: codeberg.org/rini/eslint-config-loosely-strict/4717413299e4235eaf3c7efe681225e810d67120
     name: eslint-config-loosely-strict
     version: 0.1.0
     peerDependencies:

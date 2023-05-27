@@ -8,17 +8,17 @@
         "license",
         "header"
     ],
-    "homepage": "https://codeberg.org/dissoc/eslint-plugin-simple-header#eslint-plugin-simple-header",
+    "homepage": "https://codeberg.org/rini/eslint-plugin-simple-header#eslint-plugin-simple-header",
     "license": "CC0-1.0",
     "author": "Rini",
     "repository": {
         "type": "git",
-        "url": "https://codeberg.org/dissoc/eslint-plugin-simple-header.git"
+        "url": "https://codeberg.org/rini/eslint-plugin-simple-header.git"
     },
     "main": "src/index.js",
     "devDependencies": {
         "@types/node": "^20.2.4",
         "eslint": "^8.41.0",
-        "eslint-config-loosely-strict": "git+https://codeberg.org/dissoc/eslint-config-loosely-strict.git"
+        "eslint-config-loosely-strict": "git+https://codeberg.org/rini/eslint-config-loosely-strict.git"
     }
 }
