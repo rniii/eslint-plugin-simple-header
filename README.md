@@ -21,13 +21,13 @@ Given the following configuration:
     "rules": {
         "simple-header/header": [
             "error",
-            [
-                "Caterpillar, meow",
-                "Copyright (c) {year} {author}",
-                "",
-                "SPDX-License-Identifier: CC0-1.0"
-            ],
-            { "templates": { "author": [".*", "cat"] } }
+            {
+                "text": [
+                    "Copyright (c) {year} {author}",
+                    "SPDX-License-Identifier: GPL-3.0-or-later"
+                ],
+                "templates": { "author": [".*", "Rini"] }
+            }
         ]
     }
 }
@@ -36,63 +36,31 @@ Given the following configuration:
 The rule will match a header like this:
 
     /*
-     * Caterpillar, meow
-     * Copyright (c) 2023 Anyone
-     *
-     * SPDX-License-Identifier: CC0-1.0
+     * Copyright (c) 1970 Linus Torvalds
+     * SPDX-License-Identifier: GPL-3.0-or-later
      */
 
 And when running auto-fix, will insert a header like so:
 
     /*
-     * Caterpillar, meow
-     * Copyright (c) 2023 cat
-     *
-     * SPDX-License-Identifier: CC0-1.0
+     * Copyright (c) 2023 Rini
+     * SPDX-License-Identifier: GPL-3.0-or-later
      */
 
 (Where 2023 is the current year, if you are from the future)
 
-See the section below for more info on `templates`, how to specify multiple header formats, and how to use external
-files for headers.
+`text` may be an array of lines, or an entire string. It’s also possible to give an array of paths to `files`. In both
+cases, they can include comment syntax and won’t be autoformatted (i.e. prefixed with `*`s).
 
-If a header is already present when auto-fixing, and it is not a JSDoc comment, it’ll be replaced. Additionally, the
-rule will still match headers that start with `/*!` instead of `/*`, which in many tools indicates that the comment
-should not be removed (e.g. in bundlers like [esbuild](https://esbuild.github.io/api/#legal-comments)).
+Inside the header’s text `{template}` syntax can be used, which correlates to the `template` key. The first value is a
+regex used to match the header, and the second is a default value. By default, `year` matches `\d{4}` and defaults the
+current year.
 
-## `header` options
+A few other options include:
 
-The `simple-header/header` rule takes a variable amount of options. The last option might be an object, like so:
-
-- `"file"` text file to use as a header. Trailing spaces will be trimmed on the end of the file, but otherwise the
-  entire file is used as-is
-
-- `"files"` like `"file"`, but you can specify multiple files
-
-- `"templates"` configures what templates can be used in the header. It should be an object whose properties are tuples
-  of `[pattern, default]`. When a template is used in the header (`{foo}`), the rule will accept any headers which match
-  `pattern`, and when inserting headers via auto-fix, `default` will be used. By default, this includes `year`, which
-  matches any four digit string and defaults to the current year.
-
-- `"plain": false` automatically prefixes comment lines with asterisks, and adds leading whitespace: (this is the
-  default)
-
-      /*
-       * A single line will be formatted like this.
-       */
-
-- `"plain": true` uses the header text as-is in the block comment, and allows you to include `/* */` in the header text
-  to more precisely control spacing inside the block comment
-
-- `"newlines"` how many blank lines should be added after the block comment (defaults to `1`)
-
-- `"linebreak"` controls which line endings to use: `"unix"` for LF (default), `"windows"` for CRLF. Likely you will
-  want to stick with the default.
-
-  See also: the [`linebreak-style`](https://eslint.org/docs/latest/rules/linebreak-style) eslint rule
-
-All other options are treated as possible headers. They might be strings, or arrays of strings, in which they will be
-joined with newlines. If multiple headers are given, the first header is used as the default when auto-fixing.
-
-It is technically possible to provide headers via the options array, plus `"file"` and `"files"`, and they will be
-joined in that order. This behaviour is not encouraged. It is an error to not provide headers via any of these methods.
+- `newlines` specifies exactly how many lines should be after the header, and defaults to 1. If the file is empty
+  otherwise, no newlines are added.
+- `syntax` specifies the comment syntax, defaults to `["/*", "*/"]`. It may also be a string, for single-line comment
+  blocks (e.g. `//`)
+- `decor` specifies how the comment is formatted with a tuple of start, indent and end. When `syntax` is a block
+  comment, this defaults to `["\n", " * ", "\n "]`, and defaults to `" "` otherwise.

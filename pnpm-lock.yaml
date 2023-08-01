@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 devDependencies:
   '@types/node':
     specifier: ^20.2.4
@@ -9,7 +13,10 @@ devDependencies:
     version: 8.41.0
   eslint-config-loosely-strict:
     specifier: git+https://codeberg.org/rini/eslint-config-loosely-strict.git
-    version: codeberg.org/rini/eslint-config-loosely-strict/4717413299e4235eaf3c7efe681225e810d67120(eslint-plugin-simple-import-sort@10.0.0)(eslint@8.41.0)
+    version: codeberg.org/rini/eslint-config-loosely-strict/3f3bb5be202facdc06621733d74c841e98fe1c00(eslint-plugin-simple-import-sort@10.0.0)(eslint@8.41.0)
+  eslint-plugin-simple-header:
+    specifier: 'link:'
+    version: 'link:'
 
 packages:
 
@@ -659,9 +666,9 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  codeberg.org/rini/eslint-config-loosely-strict/4717413299e4235eaf3c7efe681225e810d67120(eslint-plugin-simple-import-sort@10.0.0)(eslint@8.41.0):
-    resolution: {commit: 4717413299e4235eaf3c7efe681225e810d67120, repo: https://codeberg.org/rini/eslint-config-loosely-strict.git, type: git}
-    id: codeberg.org/rini/eslint-config-loosely-strict/4717413299e4235eaf3c7efe681225e810d67120
+  codeberg.org/rini/eslint-config-loosely-strict/3f3bb5be202facdc06621733d74c841e98fe1c00(eslint-plugin-simple-import-sort@10.0.0)(eslint@8.41.0):
+    resolution: {commit: 3f3bb5be202facdc06621733d74c841e98fe1c00, repo: https://codeberg.org/rini/eslint-config-loosely-strict.git, type: git}
+    id: codeberg.org/rini/eslint-config-loosely-strict/3f3bb5be202facdc06621733d74c841e98fe1c00
     name: eslint-config-loosely-strict
     version: 0.1.0
     peerDependencies:

@@ -1,6 +1,26 @@
 {
     "root": true,
     "extends": "loosely-strict",
+    "plugins": ["simple-header"],
     "parserOptions": { "ecmaVersion": "latest" },
-    "env": { "node": true }
+    "env": { "node": true },
+    "rules": {
+        "simple-header/header": [
+            "error",
+            {
+                "text": [
+                    "eslint-plugin-simple-header, a license header plugin for ESLint",
+                    "Written in {year} by Rini",
+                    "",
+                    "To the extend possible by law, the author has dedicated all copyright",
+                    "and related rights to this software to the public domain worldwide.",
+                    "This software is distributed without any warranty. You should have",
+                    "received a copy of the CC0 Public Domain Dedication along with this",
+                    "software. If not, see <https://creativecommons.org/publicdomain/zero/1.0/>",
+                    "",
+                    "SPDX-License-Identifier: CC0-1.0"
+                ]
+            }
+        ]
+    }
 }
