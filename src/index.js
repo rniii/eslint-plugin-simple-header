@@ -41,11 +41,11 @@ function matchHeader(srcHeader, headers, templates) {
         const body = escapeRegex(header)
             .replace(/\\\{(\w+)\\\}/g, (m, key) => templates[key]?.[0] ?? m);
 
-        if (!new RegExp(`^${body}$`).test(srcHeader))
-            return false;
+        if (new RegExp(`^${body}$`).test(srcHeader))
+            return true;
     }
 
-    return true;
+    return false;
 }
 
 function makeHeader(headers, templates) {
@@ -100,7 +100,7 @@ function create(ctx) {
     const headers = rawHeaders.map((raw) => makeComment(raw, syntax, decor));
     const trailingLines = "\n".repeat(src.slice(srcHeader.length).trim() ? 1 + newlines : 1);
 
-    if (!matchHeader(stripExclamations(srcHeader.trim()), headers, templates)) {
+    if (!matchHeader(stripExclamations(srcHeader.trim(), syntax), headers, templates)) {
         ctx.report({
             message: srcHeader.trim() ? "Invalid header" : "Missing header",
             loc: { line: 1, column: 0 },

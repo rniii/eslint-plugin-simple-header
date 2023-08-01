@@ -1,6 +1,6 @@
 {
     "name": "eslint-plugin-simple-header",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Simple to license header plugin for ESLint",
     "keywords": [
         "eslint",
