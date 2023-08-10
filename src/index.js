@@ -96,7 +96,9 @@ function create(ctx) {
 
     /** @type {string} */
     const src = ctx.sourceCode.getText();
-    const srcHeader = findHeader(src, syntax);
+    // skip over a shebang, if present
+    const offset = src.match(/^#!.*?\n/)?.[0]?.length ?? 0;
+    const srcHeader = findHeader(src.slice(offset), syntax);
     const headers = rawHeaders.map((raw) => makeComment(raw, syntax, decor));
     const trailingLines = "\n".repeat(src.slice(srcHeader.length).trim() ? 1 + newlines : 1);
 
@@ -106,7 +108,7 @@ function create(ctx) {
             loc: { line: 1, column: 0 },
             fix(fixer) {
                 const header = makeHeader(headers, templates) + trailingLines;
-                return fixer.replaceTextRange([0, srcHeader.length], header);
+                return fixer.replaceTextRange([offset, offset + srcHeader.length], header);
             },
         });
     } else if (!srcHeader.startsWith(syntax[0]) || /\n*$/.exec(srcHeader)[0] !== trailingLines) {
@@ -115,7 +117,7 @@ function create(ctx) {
             loc: { line: 1, column: 0 },
             fix(fixer) {
                 const header = srcHeader.trim() + trailingLines;
-                return fixer.replaceTextRange([0, srcHeader.length], header);
+                return fixer.replaceTextRange([offset, offset + srcHeader.length], header);
             },
         });
     }
