@@ -64,4 +64,4 @@ A few other options include:
   blocks (e.g. `//`)
 - `decor` specifies how the comment is formatted with a tuple of start, indent and end. When `syntax` is a block
   comment, this defaults to `["\n", " * ", "\n "]`, and defaults to `" "` otherwise.
-- `linebreak` specifies the line ending to expect on files: `"unix"` for LF (default), `"windows"` for CRLF
+- `linebreak` specifies the line ending to expect on files: `"unix"` for LF, `"windows"` for CRLF. By default it will auto-detect from the file.
