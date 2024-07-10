@@ -96,11 +96,14 @@ function create(ctx) {
 
     /** @type {string} */
     const src = ctx.sourceCode.getText();
+    const endl = options.linebreak
+        ? options.linebreak === "windows" ? "\r\n" : "\n"
+        : src.includes("\r\n") ? "\r\n" : "\n";
     // skip over a shebang, if present
     const offset = src.match(/^#!.*?\n/)?.[0]?.length ?? 0;
     const srcHeader = findHeader(src.slice(offset), syntax);
-    const headers = rawHeaders.map((raw) => makeComment(raw, syntax, decor));
-    const trailingLines = "\n".repeat(src.slice(srcHeader.length).trim() ? 1 + newlines : 1);
+    const headers = rawHeaders.map((raw) => makeComment(raw, syntax, decor).replace(/\n/g, endl));
+    const trailingLines = endl.repeat(src.slice(srcHeader.length).trim() ? 1 + newlines : 1);
 
     if (!matchHeader(stripExclamations(srcHeader.trim(), syntax), headers, templates)) {
         ctx.report({
@@ -111,7 +114,7 @@ function create(ctx) {
                 return fixer.replaceTextRange([offset, offset + srcHeader.length], header);
             },
         });
-    } else if (!srcHeader.startsWith(syntax[0]) || /\n*$/.exec(srcHeader)[0] !== trailingLines) {
+    } else if (!srcHeader.startsWith(syntax[0]) || /(\r?\n)*$/.exec(srcHeader)[0] !== trailingLines) {
         ctx.report({
             message: "Bad header spacing",
             loc: { line: 1, column: 0 },
@@ -175,6 +178,10 @@ const schema = [{
             },
         },
         newlines: { type: "number", minimum: 0 },
+        linebreak: {
+            type: "string",
+            pattern: "^(unix|windows)$",
+        },
     },
 }];
 
