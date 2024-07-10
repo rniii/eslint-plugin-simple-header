@@ -1,6 +1,6 @@
 /*
  * eslint-plugin-simple-header, a license header plugin for ESLint
- * Written in 2023 by Rini
+ * Written in 2023 by rini <rini@rinici.de>
  *
  * To the extend possible by law, the author has dedicated all copyright
  * and related rights to this software to the public domain worldwide.

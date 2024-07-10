@@ -1,6 +1,6 @@
 {
     "name": "eslint-plugin-simple-header",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Simple to license header plugin for ESLint",
     "keywords": [
         "eslint",
@@ -10,7 +10,7 @@
     ],
     "homepage": "https://codeberg.org/rini/eslint-plugin-simple-header#eslint-plugin-simple-header",
     "license": "CC0-1.0",
-    "author": "Rini",
+    "author": "rini <rini@rinici.de>",
     "repository": {
         "type": "git",
         "url": "https://codeberg.org/rini/eslint-plugin-simple-header.git"
